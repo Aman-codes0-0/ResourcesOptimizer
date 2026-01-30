@@ -186,25 +186,27 @@ class App {
     }
 
     async loadResources() {
-        document.getElementById('pageContent').innerHTML = `
-            <h2>Resources Directory</h2>
-            <div id="resourcesTable"></div>
-        `;
-        // Implement resource logic here or in separate file
+        if (window.resourceManager) {
+            await window.resourceManager.render();
+        } else {
+            document.getElementById('pageContent').innerHTML = '<div class="error">Resource Manager module not loaded</div>';
+        }
     }
 
     async loadProjects() {
-        document.getElementById('pageContent').innerHTML = `
-            <h2>Projects Portfolio</h2>
-            <div id="projectsTable"></div>
-        `;
+        if (window.projectManager) {
+            await window.projectManager.render();
+        } else {
+            document.getElementById('pageContent').innerHTML = '<div class="error">Project Manager module not loaded</div>';
+        }
     }
 
     async loadAllocations() {
-        document.getElementById('pageContent').innerHTML = `
-            <h2>Resource Allocations</h2>
-            <div id="allocationsTable"></div>
-        `;
+        if (window.allocationManager) {
+            await window.allocationManager.render();
+        } else {
+            document.getElementById('pageContent').innerHTML = '<div class="error">Allocation Manager module not loaded</div>';
+        }
     }
 
     async loadAnalytics() {
