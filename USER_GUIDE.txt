@@ -1,0 +1,1153 @@
+# SMART RESOURCE UTILIZATION AND BENCH OPTIMIZATION SYSTEM
+## Complete User Guide and Operations Manual
+
+═══════════════════════════════════════════════════════════════════════════════
+TABLE OF CONTENTS
+═══════════════════════════════════════════════════════════════════════════════
+
+1. SYSTEM OVERVIEW
+2. INSTALLATION & SETUP
+3. STARTING THE APPLICATION
+4. DASHBOARD GUIDE
+5. RESOURCE MANAGEMENT
+6. PROJECT MANAGEMENT
+7. BENCH OPTIMIZATION
+8. ALLOCATION MANAGEMENT
+9. ANALYTICS & INSIGHTS
+10. RULE ENGINE EXPLAINED
+11. API REFERENCE
+12. TROUBLESHOOTING
+13. BEST PRACTICES
+14. ADVANCED OPERATIONS
+
+═══════════════════════════════════════════════════════════════════════════════
+1. SYSTEM OVERVIEW
+═══════════════════════════════════════════════════════════════════════════════
+
+WHAT IS THIS SYSTEM?
+-------------------
+The Smart Resource Utilization and Bench Optimization System is an intelligent,
+rule-based platform designed to help organizations:
+
+✓ Optimize resource allocation across projects
+✓ Manage bench resources efficiently
+✓ Maximize team utilization
+✓ Prevent resource burnout
+✓ Make data-driven staffing decisions
+
+KEY FEATURES:
+------------
+• Smart Skill Matching: Automatically matches resources to projects based on skills
+• Utilization Tracking: Real-time monitoring of resource utilization
+• Bench Management: Track and optimize resources on bench
+• Auto-Allocation: Intelligent resource-to-project assignment
+• Analytics Dashboard: Comprehensive insights and recommendations
+• Real-Time Updates: WebSocket-powered live data synchronization
+• Conflict Detection: Identifies overallocation and capacity issues
+
+TECHNOLOGY STACK:
+----------------
+Backend:  Node.js, Express, SQL.js (SQLite)
+Frontend: HTML5, CSS3, Vanilla JavaScript
+Real-Time: WebSocket (ws library)
+Database: SQLite (in-memory with disk persistence)
+
+═══════════════════════════════════════════════════════════════════════════════
+2. INSTALLATION & SETUP
+═══════════════════════════════════════════════════════════════════════════════
+
+PREREQUISITES:
+-------------
+• Node.js (version 14 or higher)
+• npm (comes with Node.js)
+• Modern web browser (Chrome, Firefox, Edge, Safari)
+• Text editor (optional, for configuration)
+
+INSTALLATION STEPS:
+------------------
+
+Step 1: Navigate to Project Directory
+   Open Command Prompt or PowerShell:
+   cd "C:\Users\DELL PC\Desktop\New folder (2)"
+
+Step 2: Install Dependencies
+   Run the following command:
+   npm install
+
+   This will install:
+   - express (web server)
+   - cors (cross-origin support)
+   - sql.js (database)
+   - ws (WebSocket)
+   - uuid (unique ID generation)
+
+Step 3: Verify Installation
+   Check that node_modules folder was created
+   Verify package.json exists
+
+FOLDER STRUCTURE:
+----------------
+New folder (2)/
+├── server.js                 # Main server file
+├── database.js              # Database layer
+├── rule-engine.js           # Rule-based logic
+├── allocation-optimizer.js  # Allocation algorithms
+├── package.json             # Dependencies
+├── README.md                # Quick reference
+├── resources.db             # Database file (auto-created)
+└── public/
+    ├── index.html          # Main UI
+    ├── styles.css          # Styling
+    └── app.js              # Frontend logic
+
+═══════════════════════════════════════════════════════════════════════════════
+3. STARTING THE APPLICATION
+═══════════════════════════════════════════════════════════════════════════════
+
+STARTING THE SERVER:
+-------------------
+
+Method 1: Standard Start
+   npm start
+
+Method 2: Development Mode (with auto-reload)
+   npm run dev
+
+WHAT HAPPENS WHEN YOU START:
+---------------------------
+1. Database initializes (creates resources.db if not exists)
+2. Sample data is loaded (8 resources, 4 projects)
+3. Server starts on port 3000
+4. WebSocket server starts
+5. You'll see this message:
+
+   ╔════════════════════════════════════════════════════════════════╗
+   ║  Smart Resource Utilization & Bench Optimization System       ║
+   ║  Server running on http://localhost:3000                      ║
+   ║  WebSocket ready for real-time updates                        ║
+   ╚════════════════════════════════════════════════════════════════╝
+
+ACCESSING THE APPLICATION:
+-------------------------
+1. Open your web browser
+2. Navigate to: http://localhost:3000
+3. The dashboard will load automatically
+
+STOPPING THE SERVER:
+-------------------
+Press Ctrl+C in the terminal
+The server will shut down gracefully and save the database
+
+═══════════════════════════════════════════════════════════════════════════════
+4. DASHBOARD GUIDE
+═══════════════════════════════════════════════════════════════════════════════
+
+DASHBOARD OVERVIEW:
+------------------
+The dashboard is your command center, showing real-time metrics and insights.
+
+MAIN SECTIONS:
+-------------
+
+A. METRIC CARDS (Top Row)
+   ┌─────────────────────────────────────────────────────────────┐
+   │ Total Resources │ On Bench │ Active Projects │ Avg Utilization │
+   └─────────────────────────────────────────────────────────────┘
+
+   • Total Resources: Number of people in your team
+   • On Bench: Available resources not assigned to projects
+   • Active Projects: Currently running projects
+   • Avg Utilization: Team-wide average utilization percentage
+
+B. UTILIZATION BREAKDOWN (Chart)
+   Visual representation of resource distribution:
+   
+   • Underutilized (Orange): <50% utilization
+     → Action: Increase allocation or move to bench
+   
+   • Optimal (Green): 50-90% utilization
+     → Action: Maintain current allocation
+   
+   • Overutilized (Red): >90% utilization
+     → Action: Reduce workload, risk of burnout
+   
+   • On Bench (Blue): 0% utilization
+     → Action: Find suitable projects
+
+C. ALERTS SECTION
+   Critical notifications requiring immediate attention:
+   
+   • Critical Alerts (Red): Urgent issues
+     Example: "2 resource(s) on bench for 30+ days"
+   
+   • Warning Alerts (Orange): Important issues
+     Example: "1 resource(s) are overutilized"
+   
+   • Info Alerts (Blue): General information
+     Example: "2 high-priority projects need attention"
+
+D. RECENT RECOMMENDATIONS
+   AI-generated suggestions for optimization:
+   
+   • Allocation recommendations with skill match percentages
+   • Bench optimization suggestions
+   • Priority-based action items
+
+UNDERSTANDING THE METRICS:
+-------------------------
+
+Utilization Percentage:
+   0%     = On bench (available)
+   1-49%  = Underutilized
+   50-90% = Optimal
+   91-99% = Near capacity
+   100%+  = Overallocated (conflict!)
+
+Bench Percentage:
+   <20%   = Healthy bench
+   20-40% = Moderate bench
+   >40%   = High bench (action needed)
+
+CONNECTION STATUS:
+-----------------
+Bottom left corner shows WebSocket status:
+   • Green dot + "Connected" = Real-time updates active
+   • Orange dot + "Disconnected" = Reconnecting...
+
+═══════════════════════════════════════════════════════════════════════════════
+5. RESOURCE MANAGEMENT
+═══════════════════════════════════════════════════════════════════════════════
+
+ACCESSING RESOURCES:
+-------------------
+Click "Resources" in the left sidebar
+
+VIEWING RESOURCES:
+-----------------
+The resources table shows:
+   • Name & Email
+   • Role (e.g., Full Stack Developer)
+   • Skills (displayed as colored tags)
+   • Current Utilization (percentage)
+   • Status (Available, Allocated, Partially Allocated)
+   • Actions (View, Delete buttons)
+
+ADDING A NEW RESOURCE:
+---------------------
+
+Step 1: Click "+ Add Resource" button (top right)
+
+Step 2: Fill in the form:
+   ┌─────────────────────────────────────────┐
+   │ Name: *                                 │
+   │ [Enter full name]                       │
+   │                                         │
+   │ Email: *                                │
+   │ [Enter email address]                   │
+   │                                         │
+   │ Role: *                                 │
+   │ [Enter job title]                       │
+   │                                         │
+   │ Skills: *                               │
+   │ [Enter skills separated by commas]      │
+   │ Example: JavaScript, React, Node.js     │
+   │                                         │
+   │ Availability (%):                       │
+   │ [100] (default)                         │
+   │                                         │
+   │ [Cancel]  [Save]                        │
+   └─────────────────────────────────────────┘
+
+Step 3: Click "Save"
+
+IMPORTANT NOTES:
+   • Fields marked with * are required
+   • Skills should be comma-separated
+   • Availability is 100% by default
+   • New resources start with "Available" status
+   • Email must be unique
+
+VIEWING RESOURCE DETAILS:
+------------------------
+Click "View" button next to any resource to see:
+   • Complete profile
+   • Current assignments
+   • Utilization history
+   • Skill set
+
+DELETING A RESOURCE:
+-------------------
+1. Click "Delete" button next to the resource
+2. Confirm deletion in the popup
+3. Resource is permanently removed
+
+⚠️ WARNING: Deleting a resource will remove all their allocations!
+
+SKILL MANAGEMENT TIPS:
+---------------------
+• Use consistent naming (e.g., "JavaScript" not "JS")
+• Include both technical and soft skills
+• Update skills regularly as team members learn
+• Use specific technologies (e.g., "React 18" instead of just "React")
+
+EXAMPLE RESOURCES:
+-----------------
+Name: Sarah Johnson
+Email: sarah.johnson@company.com
+Role: Senior Full Stack Developer
+Skills: JavaScript, TypeScript, React, Node.js, PostgreSQL, AWS
+Availability: 100%
+
+Name: Mike Chen
+Email: mike.chen@company.com
+Role: DevOps Engineer
+Skills: Docker, Kubernetes, AWS, CI/CD, Terraform, Python
+Availability: 100%
+
+═══════════════════════════════════════════════════════════════════════════════
+6. PROJECT MANAGEMENT
+═══════════════════════════════════════════════════════════════════════════════
+
+ACCESSING PROJECTS:
+------------------
+Click "Projects" in the left sidebar
+
+VIEWING PROJECTS:
+----------------
+The projects table shows:
+   • Project Name & Description
+   • Required Skills (as colored tags)
+   • Resources Needed (number)
+   • Priority (Critical, High, Medium, Low)
+   • Status (Planning, Active, Completed)
+   • Actions (Auto Allocate, Delete)
+
+CREATING A NEW PROJECT:
+----------------------
+
+Step 1: Click "+ Add Project" button
+
+Step 2: Fill in the project form:
+   ┌─────────────────────────────────────────┐
+   │ Project Name: *                         │
+   │ [Enter project name]                    │
+   │                                         │
+   │ Description:                            │
+   │ [Enter project description]             │
+   │                                         │
+   │ Required Skills: *                      │
+   │ [Enter required skills, comma-separated]│
+   │ Example: React, Node.js, PostgreSQL     │
+   │                                         │
+   │ Required Resources:                     │
+   │ [1] (number of people needed)           │
+   │                                         │
+   │ Priority:                               │
+   │ [▼ Medium]                              │
+   │   - Low                                 │
+   │   - Medium                              │
+   │   - High                                │
+   │   - Critical                            │
+   │                                         │
+   │ Start Date:                             │
+   │ [Select date]                           │
+   │                                         │
+   │ End Date:                               │
+   │ [Select date]                           │
+   │                                         │
+   │ [Cancel]  [Save]                        │
+   └─────────────────────────────────────────┘
+
+Step 3: Click "Save"
+
+PROJECT PRIORITY LEVELS:
+-----------------------
+Critical: Highest priority, allocated first
+   Use for: Business-critical projects, urgent deadlines
+
+High: Important projects
+   Use for: Key initiatives, customer-facing projects
+
+Medium: Standard priority
+   Use for: Regular development work
+
+Low: Lowest priority
+   Use for: Internal improvements, nice-to-have features
+
+AUTO-ALLOCATING RESOURCES:
+-------------------------
+
+Step 1: Click "Auto Allocate" button next to a project
+
+Step 2: System automatically:
+   • Finds best-matched resources based on skills
+   • Checks resource availability
+   • Considers project priority
+   • Creates allocations
+
+Step 3: Review the results:
+   ✓ Success: "Successfully allocated X resource(s) to [Project Name]"
+   ✗ Failure: "No suitable resources found" + suggestions
+
+WHAT MAKES A GOOD MATCH?
+   • 90%+ skill match = Excellent (immediate allocation)
+   • 70-89% match = Good (recommended)
+   • 50-69% match = Partial (consider with training)
+   • <50% match = Poor (not recommended)
+
+DELETING A PROJECT:
+------------------
+1. Click "Delete" button
+2. Confirm deletion
+3. All allocations for this project are removed
+4. Resources become available again
+
+EXAMPLE PROJECT:
+---------------
+Name: E-Commerce Platform Redesign
+Description: Complete redesign of the customer-facing e-commerce platform
+Required Skills: React, TypeScript, Node.js, PostgreSQL, AWS
+Required Resources: 3
+Priority: High
+Start Date: 2026-02-01
+End Date: 2026-05-01
+Status: Planning
+
+═══════════════════════════════════════════════════════════════════════════════
+7. BENCH OPTIMIZATION
+═══════════════════════════════════════════════════════════════════════════════
+
+WHAT IS "BENCH"?
+---------------
+"Bench" refers to resources who are available but not currently allocated to
+any project. While some bench time is normal, extended bench periods are costly
+and can lead to resource dissatisfaction.
+
+ACCESSING BENCH VIEW:
+--------------------
+Click "Bench" in the left sidebar
+
+BENCH RESOURCES TABLE:
+---------------------
+Shows all available resources with:
+   • Name
+   • Role
+   • Skills
+   • Days on Bench (color-coded by urgency)
+   • Actions (Find Projects button)
+
+URGENCY COLOR CODING:
+--------------------
+🔴 Red (14+ days): CRITICAL
+   → Immediate action required
+   → High cost to organization
+   → Risk of resource leaving
+
+🟠 Orange (7-13 days): HIGH
+   → Action needed soon
+   → Consider training or temporary assignments
+
+🟢 Green (0-6 days): NORMAL
+   → Acceptable bench time
+   → Normal between projects
+
+FINDING PROJECTS FOR BENCH RESOURCES:
+------------------------------------
+
+Step 1: Click "Find Projects" button next to a resource
+
+Step 2: System shows matching projects:
+   ┌─────────────────────────────────────────┐
+   │ Matching Projects for [Resource Name]:  │
+   │                                         │
+   │ 1. E-Commerce Platform (85% match)      │
+   │ 2. Mobile App Development (72% match)   │
+   │ 3. Data Analytics Dashboard (65% match) │
+   │                                         │
+   │ Recommendations:                        │
+   │ • Allocate to one of the matched projects│
+   │ • Consider upskilling in high-demand areas│
+   └─────────────────────────────────────────┘
+
+Step 3: Take action:
+   • Manually allocate to a project
+   • Use auto-allocation
+   • Plan training/upskilling
+
+BENCH OPTIMIZATION STRATEGIES:
+-----------------------------
+
+For 0-6 Days on Bench:
+   ✓ Normal transition time
+   ✓ Use for training, documentation
+   ✓ Monitor for upcoming projects
+
+For 7-13 Days on Bench:
+   ⚠ Start looking for projects
+   ⚠ Consider skill development
+   ⚠ Review project pipeline
+
+For 14+ Days on Bench:
+   🚨 URGENT: Find allocation immediately
+   🚨 Consider temporary assignments
+   🚨 Explore internal mobility
+   🚨 Review retention strategy
+
+REDUCING BENCH TIME:
+-------------------
+1. Regular pipeline reviews
+2. Proactive skill development
+3. Cross-training for flexibility
+4. Temporary/shadow assignments
+5. Internal project opportunities
+
+ACCEPTABLE BENCH PERCENTAGE:
+---------------------------
+   0-10%:  Excellent (very efficient)
+   10-20%: Good (healthy buffer)
+   20-30%: Moderate (watch closely)
+   30%+:   High (action needed)
+
+═══════════════════════════════════════════════════════════════════════════════
+8. ALLOCATION MANAGEMENT
+═══════════════════════════════════════════════════════════════════════════════
+
+ACCESSING ALLOCATIONS:
+---------------------
+Click "Allocations" in the left sidebar
+
+VIEWING ALLOCATIONS:
+-------------------
+The allocations table shows:
+   • Resource Name
+   • Project Name
+   • Allocation Percentage (50%, 100%, etc.)
+   • Start Date
+   • End Date
+   • Actions (Deallocate button)
+
+MANUAL ALLOCATION:
+-----------------
+
+Step 1: Click "Manual Allocation" button
+
+Step 2: Fill in the form:
+   ┌─────────────────────────────────────────┐
+   │ Resource: *                             │
+   │ [▼ Select resource]                     │
+   │   Shows: Name (Current Utilization)     │
+   │                                         │
+   │ Project: *                              │
+   │ [▼ Select project]                      │
+   │                                         │
+   │ Allocation Percentage:                  │
+   │ [100] (1-100%)                          │
+   │                                         │
+   │ [Cancel]  [Allocate]                    │
+   └─────────────────────────────────────────┘
+
+Step 3: Click "Allocate"
+
+ALLOCATION VALIDATION:
+---------------------
+The system checks:
+   ✓ Resource has available capacity
+   ✓ Allocation doesn't exceed 100%
+   ✓ Skills match project requirements
+
+Possible Results:
+   ✓ Success: Allocation created
+   ⚠ Warning: Low skill match (still allowed)
+   ✗ Error: Overallocation (not allowed)
+
+PARTIAL ALLOCATION:
+------------------
+You can allocate a resource at less than 100%:
+
+Example:
+   Resource: John Doe (currently 40% utilized)
+   Project: New Website
+   Allocation: 50%
+   Result: John is now 90% utilized (40% + 50%)
+
+Use Cases:
+   • Resource working on multiple projects
+   • Part-time assignment
+   • Gradual ramp-up
+   • Shared resources
+
+DEALLOCATING RESOURCES:
+----------------------
+
+Step 1: Find the allocation in the table
+
+Step 2: Click "Deallocate" button
+
+Step 3: Confirm deallocation
+
+What Happens:
+   • Allocation is removed
+   • Resource utilization decreases
+   • Resource may move to bench if 0% utilized
+   • Project resource count decreases
+
+AUTO-OPTIMIZE ALL:
+-----------------
+
+Step 1: Click "Auto Optimize All" button
+
+Step 2: Confirm optimization
+
+What It Does:
+   • Processes all projects in priority order
+   • Allocates best-matched resources
+   • Skips projects with no suitable resources
+   • Shows summary of results
+
+Results Summary:
+   ┌─────────────────────────────────────────┐
+   │ Optimization Complete!                  │
+   │                                         │
+   │ Successful: 3 projects                  │
+   │ Failed: 1 project                       │
+   │                                         │
+   │ Details:                                │
+   │ ✓ E-Commerce Platform: 2 resources      │
+   │ ✓ Mobile App: 1 resource                │
+   │ ✓ Cloud Migration: 1 resource           │
+   │ ✗ Data Analytics: No suitable resources │
+   └─────────────────────────────────────────┘
+
+ALLOCATION BEST PRACTICES:
+-------------------------
+1. Prefer auto-allocation for objective matching
+2. Use manual allocation for specific requirements
+3. Monitor utilization to prevent burnout
+4. Review allocations weekly
+5. Plan for project end dates
+6. Maintain skill diversity on teams
+
+═══════════════════════════════════════════════════════════════════════════════
+9. ANALYTICS & INSIGHTS
+═══════════════════════════════════════════════════════════════════════════════
+
+ACCESSING ANALYTICS:
+-------------------
+Click "Analytics" in the left sidebar
+
+FOUR ANALYTICS SECTIONS:
+-----------------------
+
+A. ALLOCATION CONFLICTS
+   Identifies problems with current allocations:
+
+   Types of Conflicts:
+   
+   1. Overallocation (>100% utilization)
+      Example: "John Doe: 120% utilization"
+      Severity: High
+      Recommendation: "Reduce allocation or redistribute workload"
+
+   2. Near Capacity (90-100% utilization)
+      Example: "Jane Smith: 95% utilization"
+      Severity: Medium
+      Recommendation: "Monitor closely for burnout risk"
+
+   Action Steps:
+   • Review overallocated resources immediately
+   • Redistribute work from overutilized resources
+   • Consider hiring if persistent conflicts
+
+B. REALLOCATION SUGGESTIONS
+   Finds better resource-project matches:
+
+   Example:
+   ┌─────────────────────────────────────────┐
+   │ Project: Mobile Banking App             │
+   │ Current: Bob (65% skill match)          │
+   │ Suggested: Alice (90% skill match)      │
+   │ Benefit: 25% better skill match         │
+   │ Priority: High                          │
+   └─────────────────────────────────────────┘
+
+   When to Act:
+   • Benefit >20%: Strongly consider
+   • Benefit 10-20%: Consider if easy swap
+   • Benefit <10%: Usually not worth it
+
+C. AVAILABILITY FORECAST (30 Days)
+   Predicts when resources will become available:
+
+   Example:
+   ┌─────────────────────────────────────────┐
+   │ Sarah Johnson                           │
+   │ Available in: 15 days                   │
+   │ Skills: React, Node.js, AWS             │
+   │ Current Project: E-Commerce Platform    │
+   └─────────────────────────────────────────┘
+
+   Use For:
+   • Planning future projects
+   • Scheduling interviews
+   • Resource capacity planning
+   • Pipeline management
+
+D. LOAD BALANCING
+   Suggests workload redistribution:
+
+   Example:
+   ┌─────────────────────────────────────────┐
+   │ Transfer workload from:                 │
+   │ Mike (100% utilized)                    │
+   │ To: Carol (30% utilized)                │
+   │ Reason: Prevent burnout                 │
+   │ Skill Match: 85%                        │
+   └─────────────────────────────────────────┘
+
+   Benefits:
+   • Prevents burnout
+   • Improves team morale
+   • Better utilization distribution
+   • Reduces turnover risk
+
+USING ANALYTICS EFFECTIVELY:
+---------------------------
+
+Daily:
+   ✓ Check allocation conflicts
+   ✓ Review critical alerts
+
+Weekly:
+   ✓ Review reallocation suggestions
+   ✓ Check load balancing recommendations
+   ✓ Monitor bench trends
+
+Monthly:
+   ✓ Analyze utilization trends
+   ✓ Review availability forecast
+   ✓ Plan resource needs
+   ✓ Assess hiring requirements
+
+═══════════════════════════════════════════════════════════════════════════════
+10. RULE ENGINE EXPLAINED
+═══════════════════════════════════════════════════════════════════════════════
+
+The system uses six intelligent rules to make decisions:
+
+RULE 1: SKILL-BASED MATCHING
+----------------------------
+How It Works:
+   1. Compares resource skills with project requirements
+   2. Calculates exact matches (100% weight)
+   3. Calculates partial matches (50% weight)
+   4. Produces 0-100% match score
+
+Example:
+   Project Needs: React, Node.js, PostgreSQL
+   Resource Has: React, Node.js, MySQL
+   
+   Calculation:
+   - Exact matches: React, Node.js (2/3 = 66.7%)
+   - Partial matches: MySQL ≈ PostgreSQL (1/3 × 50% = 16.7%)
+   - Total Score: 83.4% (Good Match)
+
+Recommendations:
+   90-100%: "Excellent match - Immediate allocation recommended"
+   70-89%:  "Good match - Allocation recommended"
+   50-69%:  "Partial match - Consider with training"
+   0-49%:   "Low match - Not recommended"
+
+RULE 2: UTILIZATION ANALYSIS
+----------------------------
+Categories resources based on workload:
+
+Underutilized (<50%):
+   • Recommendation: Increase allocation or move to bench
+   • Risk: Wasted capacity
+   • Action: Find additional projects
+
+Optimal (50-90%):
+   • Recommendation: Maintain current allocation
+   • Status: Ideal productivity zone
+   • Action: Monitor and maintain
+
+Overutilized (>90%):
+   • Recommendation: Reduce workload
+   • Risk: Burnout, quality issues
+   • Action: Load balancing needed
+
+Bench (0%):
+   • Recommendation: Find allocation
+   • Risk: Cost, morale issues
+   • Action: Match to projects
+
+RULE 3: PRIORITY-BASED ALLOCATION
+---------------------------------
+Scoring System:
+   Critical: 100 points
+   High:     75 points
+   Medium:   50 points
+   Low:      25 points
+
+Deadline Bonuses:
+   <7 days:  +20 points
+   <14 days: +10 points
+
+Example:
+   Project A: High priority (75) + 5 days to start (+20) = 95 points
+   Project B: Critical priority (100) + 30 days to start (0) = 100 points
+   
+   Result: Project B gets resources first (higher score)
+
+RULE 4: BENCH URGENCY
+---------------------
+Urgency Levels Based on Days:
+
+Critical (30+ days):
+   • Immediate action required
+   • High organizational cost
+   • Retention risk
+
+High (14-29 days):
+   • Action needed soon
+   • Consider alternatives
+   • Monitor closely
+
+Medium (7-13 days):
+   • Normal transition time
+   • Start looking for projects
+   • Plan next assignment
+
+Low (0-6 days):
+   • Acceptable bench time
+   • Use for training
+   • Normal between projects
+
+RULE 5: AUTOMATED RECOMMENDATIONS
+---------------------------------
+System generates recommendations by:
+
+1. Analyzing all projects and resources
+2. Calculating match scores
+3. Considering priorities
+4. Checking availability
+5. Creating ranked suggestions
+
+Types of Recommendations:
+   • Allocation: "Allocate [Resource] to [Project]"
+   • Bench Alert: "[Resource] on bench for X days"
+   • Training: "Consider upskilling in [Skill]"
+   • Hiring: "No resources available for [Project]"
+
+RULE 6: LOAD BALANCING
+---------------------
+Identifies imbalances:
+
+1. Find overutilized resources (>90%)
+2. Find underutilized resources (<50%)
+3. Check skill compatibility
+4. Suggest transfers
+
+Example:
+   Overutilized: Mike (100%) - Skills: React, Node.js
+   Underutilized: Sarah (40%) - Skills: React, Vue.js, Node.js
+   
+   Skill Match: 85% (React, Node.js match)
+   Suggestion: Transfer some work from Mike to Sarah
+
+═══════════════════════════════════════════════════════════════════════════════
+11. API REFERENCE
+═══════════════════════════════════════════════════════════════════════════════
+
+BASE URL: http://localhost:3000/api
+
+RESOURCES ENDPOINTS:
+-------------------
+GET    /api/resources              Get all resources
+GET    /api/resources/:id          Get resource by ID
+GET    /api/resources/bench/all    Get bench resources
+POST   /api/resources              Create new resource
+PUT    /api/resources/:id          Update resource
+DELETE /api/resources/:id          Delete resource
+
+PROJECTS ENDPOINTS:
+------------------
+GET    /api/projects               Get all projects
+GET    /api/projects/:id           Get project by ID
+POST   /api/projects               Create new project
+PUT    /api/projects/:id           Update project
+DELETE /api/projects/:id           Delete project
+
+ALLOCATIONS ENDPOINTS:
+---------------------
+GET    /api/allocations                    Get all allocations
+POST   /api/allocations/auto/:projectId    Auto-allocate to project
+POST   /api/allocations/manual             Manual allocation
+DELETE /api/allocations/:id                Deallocate resource
+POST   /api/allocations/optimize-all       Optimize all allocations
+
+RULE ENGINE ENDPOINTS:
+---------------------
+GET    /api/rules/match/:projectId              Get best resources for project
+GET    /api/rules/utilization                   Analyze utilization
+GET    /api/rules/bench-optimization/:resourceId Get bench strategy
+POST   /api/rules/recommendations               Generate recommendations
+GET    /api/recommendations                     Get all recommendations
+GET    /api/rules/load-balancing                Get load balancing suggestions
+
+ANALYTICS ENDPOINTS:
+-------------------
+GET    /api/analytics/dashboard                Dashboard metrics
+GET    /api/analytics/conflicts                Allocation conflicts
+GET    /api/analytics/reallocation-suggestions Reallocation suggestions
+GET    /api/analytics/availability-forecast    Availability forecast
+
+EXAMPLE API CALLS:
+-----------------
+
+Create Resource:
+POST /api/resources
+{
+  "name": "John Doe",
+  "email": "john.doe@company.com",
+  "role": "Full Stack Developer",
+  "skills": "JavaScript,React,Node.js,PostgreSQL",
+  "availability": 100
+}
+
+Create Project:
+POST /api/projects
+{
+  "name": "Mobile App",
+  "description": "New mobile application",
+  "required_skills": "React Native,iOS,Android",
+  "required_resources": 2,
+  "priority": "high",
+  "start_date": "2026-02-01",
+  "end_date": "2026-06-01"
+}
+
+Manual Allocation:
+POST /api/allocations/manual
+{
+  "resourceId": "r1",
+  "projectId": "p1",
+  "allocationPercentage": 100
+}
+
+═══════════════════════════════════════════════════════════════════════════════
+12. TROUBLESHOOTING
+═══════════════════════════════════════════════════════════════════════════════
+
+COMMON ISSUES AND SOLUTIONS:
+
+ISSUE: Server won't start
+SOLUTION:
+   1. Check if port 3000 is already in use
+   2. Run: netstat -ano | findstr :3000
+   3. Kill the process or change port in server.js
+   4. Verify Node.js is installed: node --version
+
+ISSUE: "Cannot find module" error
+SOLUTION:
+   1. Delete node_modules folder
+   2. Delete package-lock.json
+   3. Run: npm install
+   4. Restart server
+
+ISSUE: Database not saving changes
+SOLUTION:
+   1. Check file permissions on resources.db
+   2. Ensure disk space is available
+   3. Restart the server
+   4. Check for error messages in console
+
+ISSUE: WebSocket not connecting
+SOLUTION:
+   1. Check browser console for errors
+   2. Verify server is running
+   3. Clear browser cache
+   4. Try a different browser
+   5. Check firewall settings
+
+ISSUE: "No suitable resources found" when auto-allocating
+SOLUTION:
+   1. Check if resources are available (not at 100% utilization)
+   2. Verify skill match (at least 50% required)
+   3. Add resources with required skills
+   4. Consider lowering skill requirements
+
+ISSUE: Page not loading
+SOLUTION:
+   1. Clear browser cache (Ctrl+Shift+Delete)
+   2. Hard refresh (Ctrl+F5)
+   3. Check browser console for errors
+   4. Verify server is running
+   5. Try http://localhost:3000 directly
+
+ISSUE: Real-time updates not working
+SOLUTION:
+   1. Check WebSocket connection status (bottom left)
+   2. Refresh the page
+   3. Restart the server
+   4. Check browser WebSocket support
+
+═══════════════════════════════════════════════════════════════════════════════
+13. BEST PRACTICES
+═══════════════════════════════════════════════════════════════════════════════
+
+RESOURCE MANAGEMENT:
+-------------------
+✓ Keep skills updated regularly
+✓ Use consistent skill naming
+✓ Include both technical and soft skills
+✓ Review resource profiles monthly
+✓ Track certifications and training
+
+PROJECT MANAGEMENT:
+------------------
+✓ Set realistic priorities
+✓ Define clear skill requirements
+✓ Update project status regularly
+✓ Plan for resource ramp-up time
+✓ Review allocations weekly
+
+BENCH OPTIMIZATION:
+------------------
+✓ Address critical bench alerts immediately
+✓ Plan training during bench time
+✓ Maintain 10-20% bench for flexibility
+✓ Track bench trends monthly
+✓ Use bench time for skill development
+
+ALLOCATION STRATEGY:
+-------------------
+✓ Prefer auto-allocation for objectivity
+✓ Aim for 70-85% average utilization
+✓ Avoid overallocation (>100%)
+✓ Plan for vacation and sick time
+✓ Balance workload across team
+
+ANALYTICS USAGE:
+---------------
+✓ Review dashboard daily
+✓ Act on critical alerts within 24 hours
+✓ Check analytics weekly
+✓ Use forecasts for planning
+✓ Track trends over time
+
+DATA HYGIENE:
+------------
+✓ Remove completed projects
+✓ Archive old allocations
+✓ Update resource status
+✓ Clean up duplicate entries
+✓ Backup database regularly
+
+═══════════════════════════════════════════════════════════════════════════════
+14. ADVANCED OPERATIONS
+═══════════════════════════════════════════════════════════════════════════════
+
+BACKING UP THE DATABASE:
+-----------------------
+The database file is: resources.db
+
+To backup:
+   1. Stop the server (Ctrl+C)
+   2. Copy resources.db to a safe location
+   3. Rename with date: resources_backup_2026-01-30.db
+   4. Restart the server
+
+To restore:
+   1. Stop the server
+   2. Replace resources.db with backup file
+   3. Restart the server
+
+CHANGING THE PORT:
+-----------------
+Edit server.js:
+   Find: const PORT = process.env.PORT || 3000;
+   Change to: const PORT = process.env.PORT || 8080;
+   Restart server
+   Access at: http://localhost:8080
+
+CUSTOMIZING SAMPLE DATA:
+-----------------------
+Edit database.js, find seedSampleData() function
+Modify the sampleResources and sampleProjects arrays
+Delete resources.db
+Restart server (will create new database with your data)
+
+EXPORTING DATA:
+--------------
+Use the API to export data:
+
+Resources:
+   curl http://localhost:3000/api/resources > resources.json
+
+Projects:
+   curl http://localhost:3000/api/projects > projects.json
+
+Allocations:
+   curl http://localhost:3000/api/allocations > allocations.json
+
+MONITORING PERFORMANCE:
+----------------------
+Check server logs for:
+   • Response times
+   • Error messages
+   • WebSocket connections
+   • Database operations
+
+SCALING CONSIDERATIONS:
+----------------------
+For larger teams (50+ resources):
+   • Consider switching to PostgreSQL
+   • Add database indexing
+   • Implement pagination
+   • Add caching layer
+   • Use load balancer
+
+SECURITY BEST PRACTICES:
+-----------------------
+✓ Don't expose to public internet without authentication
+✓ Use HTTPS in production
+✓ Implement user authentication
+✓ Add role-based access control
+✓ Sanitize all inputs
+✓ Regular security updates
+
+═══════════════════════════════════════════════════════════════════════════════
+QUICK REFERENCE COMMANDS
+═══════════════════════════════════════════════════════════════════════════════
+
+Start Server:          npm start
+Stop Server:           Ctrl+C
+Install Dependencies:  npm install
+Access Application:    http://localhost:3000
+View Logs:             Check terminal output
+Backup Database:       Copy resources.db
+Reset Database:        Delete resources.db and restart
+
+═══════════════════════════════════════════════════════════════════════════════
+SUPPORT & DOCUMENTATION
+═══════════════════════════════════════════════════════════════════════════════
+
+Additional Documentation:
+   • README.md - Quick start guide
+   • walkthrough.md - Detailed walkthrough with screenshots
+   • Code comments - Inline documentation
+
+For Questions:
+   • Check this user guide first
+   • Review the walkthrough.md
+   • Check API documentation
+   • Review code comments
+
+═══════════════════════════════════════════════════════════════════════════════
+END OF USER GUIDE
+═══════════════════════════════════════════════════════════════════════════════
+
+Version: 1.0.0
+Last Updated: January 30, 2026
+System: Smart Resource Utilization and Bench Optimization System

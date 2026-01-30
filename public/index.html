@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resource Optimization System</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <div class="logo-icon">⚡</div>
+                <h1>Resource<span>Optimizer</span></h1>
+            </div>
+            
+            <nav class="nav-menu">
+                <button class="nav-item active" data-view="dashboard">
+                    <span class="icon">📊</span>
+                    <span>Dashboard</span>
+                </button>
+                <button class="nav-item" data-view="resources">
+                    <span class="icon">👥</span>
+                    <span>Resources</span>
+                </button>
+                <button class="nav-item" data-view="projects">
+                    <span class="icon">📁</span>
+                    <span>Projects</span>
+                </button>
+                <button class="nav-item" data-view="bench">
+                    <span class="icon">⏸️</span>
+                    <span>Bench</span>
+                </button>
+                <button class="nav-item" data-view="allocations">
+                    <span class="icon">🔄</span>
+                    <span>Allocations</span>
+                </button>
+                <button class="nav-item" data-view="analytics">
+                    <span class="icon">📈</span>
+                    <span>Analytics</span>
+                </button>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="connection-status">
+                    <div class="status-indicator" id="wsStatus"></div>
+                    <span id="wsStatusText">Connecting...</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="top-bar">
+                <div class="page-title">
+                    <h2 id="currentViewTitle">Dashboard</h2>
+                    <p id="currentViewSubtitle">Real-time resource utilization overview</p>
+                </div>
+                <div class="header-actions">
+                    <button class="btn-icon" id="refreshBtn" title="Refresh Data">
+                        <span>🔄</span>
+                    </button>
+                    <button class="btn-icon" id="notificationsBtn" title="Notifications">
+                        <span>🔔</span>
+                        <span class="badge" id="notificationBadge">0</span>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Dashboard View -->
+            <div id="dashboardView" class="view active">
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-icon">👥</div>
+                        <div class="metric-content">
+                            <h3 id="totalResources">0</h3>
+                            <p>Total Resources</p>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-icon">⏸️</div>
+                        <div class="metric-content">
+                            <h3 id="benchCount">0</h3>
+                            <p>On Bench</p>
+                            <span class="metric-detail" id="benchPercentage">0%</span>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-icon">📁</div>
+                        <div class="metric-content">
+                            <h3 id="activeProjects">0</h3>
+                            <p>Active Projects</p>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-icon">📊</div>
+                        <div class="metric-content">
+                            <h3 id="avgUtilization">0%</h3>
+                            <p>Avg Utilization</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dashboard-grid">
+                    <div class="card utilization-card">
+                        <h3>Utilization Breakdown</h3>
+                        <div class="utilization-chart" id="utilizationChart"></div>
+                    </div>
+
+                    <div class="card alerts-card">
+                        <h3>Alerts & Recommendations</h3>
+                        <div id="alertsList" class="alerts-list"></div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>Recent Recommendations</h3>
+                    <div id="recommendationsList" class="recommendations-list"></div>
+                </div>
+            </div>
+
+            <!-- Resources View -->
+            <div id="resourcesView" class="view">
+                <div class="view-header">
+                    <button class="btn-primary" id="addResourceBtn">+ Add Resource</button>
+                </div>
+                <div class="card">
+                    <div id="resourcesTable" class="data-table"></div>
+                </div>
+            </div>
+
+            <!-- Projects View -->
+            <div id="projectsView" class="view">
+                <div class="view-header">
+                    <button class="btn-primary" id="addProjectBtn">+ Add Project</button>
+                </div>
+                <div class="card">
+                    <div id="projectsTable" class="data-table"></div>
+                </div>
+            </div>
+
+            <!-- Bench View -->
+            <div id="benchView" class="view">
+                <div class="card">
+                    <h3>Bench Resources</h3>
+                    <div id="benchTable" class="data-table"></div>
+                </div>
+            </div>
+
+            <!-- Allocations View -->
+            <div id="allocationsView" class="view">
+                <div class="view-header">
+                    <button class="btn-primary" id="manualAllocateBtn">Manual Allocation</button>
+                    <button class="btn-secondary" id="autoOptimizeBtn">Auto Optimize All</button>
+                </div>
+                <div class="card">
+                    <h3>Current Allocations</h3>
+                    <div id="allocationsTable" class="data-table"></div>
+                </div>
+            </div>
+
+            <!-- Analytics View -->
+            <div id="analyticsView" class="view">
+                <div class="analytics-grid">
+                    <div class="card">
+                        <h3>Allocation Conflicts</h3>
+                        <div id="conflictsList"></div>
+                    </div>
+                    <div class="card">
+                        <h3>Reallocation Suggestions</h3>
+                        <div id="reallocationList"></div>
+                    </div>
+                    <div class="card">
+                        <h3>Availability Forecast (30 days)</h3>
+                        <div id="forecastList"></div>
+                    </div>
+                    <div class="card">
+                        <h3>Load Balancing</h3>
+                        <div id="loadBalancingList"></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modals -->
+    <div id="modalOverlay" class="modal-overlay">
+        <div class="modal" id="resourceModal">
+            <div class="modal-header">
+                <h3 id="resourceModalTitle">Add Resource</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="resourceForm">
+                    <div class="form-group">
+                        <label>Name *</label>
+                        <input type="text" id="resourceName" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email *</label>
+                        <input type="email" id="resourceEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Role *</label>
+                        <input type="text" id="resourceRole" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Skills (comma-separated) *</label>
+                        <input type="text" id="resourceSkills" placeholder="e.g., JavaScript, React, Node.js" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Availability (%)</label>
+                        <input type="number" id="resourceAvailability" min="0" max="100" value="100">
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn-secondary modal-close">Cancel</button>
+                        <button type="submit" class="btn-primary">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="modal" id="projectModal">
+            <div class="modal-header">
+                <h3 id="projectModalTitle">Add Project</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="projectForm">
+                    <div class="form-group">
+                        <label>Project Name *</label>
+                        <input type="text" id="projectName" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea id="projectDescription" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Required Skills (comma-separated) *</label>
+                        <input type="text" id="projectSkills" placeholder="e.g., React, Node.js, MySQL" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Required Resources</label>
+                        <input type="number" id="projectResources" min="1" value="1">
+                    </div>
+                    <div class="form-group">
+                        <label>Priority</label>
+                        <select id="projectPriority">
+                            <option value="low">Low</option>
+                            <option value="medium" selected>Medium</option>
+                            <option value="high">High</option>
+                            <option value="critical">Critical</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Start Date</label>
+                        <input type="date" id="projectStartDate">
+                    </div>
+                    <div class="form-group">
+                        <label>End Date</label>
+                        <input type="date" id="projectEndDate">
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn-secondary modal-close">Cancel</button>
+                        <button type="submit" class="btn-primary">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="modal" id="allocationModal">
+            <div class="modal-header">
+                <h3>Manual Allocation</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="allocationForm">
+                    <div class="form-group">
+                        <label>Resource *</label>
+                        <select id="allocationResource" required></select>
+                    </div>
+                    <div class="form-group">
+                        <label>Project *</label>
+                        <select id="allocationProject" required></select>
+                    </div>
+                    <div class="form-group">
+                        <label>Allocation Percentage</label>
+                        <input type="number" id="allocationPercentage" min="1" max="100" value="100">
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn-secondary modal-close">Cancel</button>
+                        <button type="submit" class="btn-primary">Allocate</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

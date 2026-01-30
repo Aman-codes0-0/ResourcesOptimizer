@@ -1,0 +1,258 @@
+╔═══════════════════════════════════════════════════════════════════════════════╗
+║                    QUICK START GUIDE                                          ║
+║          Smart Resource Utilization & Bench Optimization System               ║
+╚═══════════════════════════════════════════════════════════════════════════════╝
+
+┌───────────────────────────────────────────────────────────────────────────────┐
+│ 1. STARTING THE SYSTEM                                                        │
+└───────────────────────────────────────────────────────────────────────────────┘
+
+   Step 1: Open Command Prompt/PowerShell
+   Step 2: Navigate to project folder:
+           cd "C:\Users\DELL PC\Desktop\New folder (2)"
+   
+   Step 3: Start the server:
+           npm start
+   
+   Step 4: Open browser and go to:
+           http://localhost:3000
+   
+   Step 5: Start using the system!
+
+┌───────────────────────────────────────────────────────────────────────────────┐
+│ 2. MAIN FEATURES                                                              │
+└───────────────────────────────────────────────────────────────────────────────┘
+
+   📊 DASHBOARD          - View real-time metrics and alerts
+   👥 RESOURCES          - Manage team members and skills
+   📁 PROJECTS           - Create and manage projects
+   ⏸️  BENCH             - Track available resources
+   🔄 ALLOCATIONS        - Assign resources to projects
+   📈 ANALYTICS          - Get insights and recommendations
+
+┌───────────────────────────────────────────────────────────────────────────────┐
+│ 3. COMMON OPERATIONS                                                          │
+└───────────────────────────────────────────────────────────────────────────────┘
+
+   ADD A RESOURCE:
+   1. Click "Resources" tab
+   2. Click "+ Add Resource"
+   3. Fill in: Name, Email, Role, Skills
+   4. Click "Save"
+
+   CREATE A PROJECT:
+   1. Click "Projects" tab
+   2. Click "+ Add Project"
+   3. Fill in: Name, Skills, Priority, Dates
+   4. Click "Save"
+
+   AUTO-ALLOCATE:
+   1. Go to "Projects" tab
+   2. Find your project
+   3. Click "Auto Allocate"
+   4. System finds best match automatically!
+
+   MANUAL ALLOCATION:
+   1. Click "Allocations" tab
+   2. Click "Manual Allocation"
+   3. Select Resource and Project
+   4. Set percentage (1-100%)
+   5. Click "Allocate"
+
+   CHECK BENCH:
+   1. Click "Bench" tab
+   2. See all available resources
+   3. Red = Critical (14+ days)
+   4. Click "Find Projects" to match
+
+┌───────────────────────────────────────────────────────────────────────────────┐
+│ 4. UNDERSTANDING METRICS                                                      │
+└───────────────────────────────────────────────────────────────────────────────┘
+
+   UTILIZATION LEVELS:
+   • 0%      = On Bench (Available)
+   • 1-49%   = Underutilized
+   • 50-90%  = Optimal ✓
+   • 91-100% = Near Capacity
+   • 100%+   = Overallocated ✗
+
+   SKILL MATCH SCORES:
+   • 90-100% = Excellent Match ✓✓✓
+   • 70-89%  = Good Match ✓✓
+   • 50-69%  = Partial Match ✓
+   • 0-49%   = Poor Match ✗
+
+   BENCH URGENCY:
+   • 0-6 days   = Normal (Green)
+   • 7-13 days  = Medium (Orange)
+   • 14-29 days = High (Orange)
+   • 30+ days   = Critical (Red) ⚠️
+
+   PROJECT PRIORITY:
+   • Critical = Highest (allocated first)
+   • High     = Important
+   • Medium   = Standard
+   • Low      = Lowest
+
+┌───────────────────────────────────────────────────────────────────────────────┐
+│ 5. RULE ENGINE QUICK REFERENCE                                                │
+└───────────────────────────────────────────────────────────────────────────────┘
+
+   The system uses 6 intelligent rules:
+
+   ✓ Skill Matching      - Finds best resource for each project
+   ✓ Utilization Analysis - Categorizes workload levels
+   ✓ Priority Allocation  - Allocates high-priority projects first
+   ✓ Bench Urgency       - Tracks days on bench
+   ✓ Auto Recommendations - Generates smart suggestions
+   ✓ Load Balancing      - Prevents burnout
+
+┌───────────────────────────────────────────────────────────────────────────────┐
+│ 6. TROUBLESHOOTING                                                            │
+└───────────────────────────────────────────────────────────────────────────────┘
+
+   PROBLEM: Server won't start
+   SOLUTION: Check if port 3000 is in use, restart computer
+
+   PROBLEM: Page not loading
+   SOLUTION: Clear browser cache (Ctrl+Shift+Delete), refresh
+
+   PROBLEM: No resources found for project
+   SOLUTION: Add resources with matching skills, or lower requirements
+
+   PROBLEM: Can't allocate resource
+   SOLUTION: Check if resource is at 100% utilization already
+
+   PROBLEM: WebSocket disconnected
+   SOLUTION: Refresh page, check if server is running
+
+┌───────────────────────────────────────────────────────────────────────────────┐
+│ 7. BEST PRACTICES                                                             │
+└───────────────────────────────────────────────────────────────────────────────┘
+
+   ✓ Check dashboard daily for alerts
+   ✓ Address critical bench alerts (30+ days) immediately
+   ✓ Keep resource skills updated
+   ✓ Use auto-allocation for objective matching
+   ✓ Aim for 70-85% average utilization
+   ✓ Review analytics weekly
+   ✓ Plan for vacation and sick time
+   ✓ Backup database regularly (copy resources.db)
+
+┌───────────────────────────────────────────────────────────────────────────────┐
+│ 8. KEYBOARD SHORTCUTS                                                         │
+└───────────────────────────────────────────────────────────────────────────────┘
+
+   Ctrl+F5         - Hard refresh page
+   F5              - Refresh page
+   Ctrl+Shift+Del  - Clear browser cache
+   Ctrl+C          - Stop server (in terminal)
+   Esc             - Close modal
+
+┌───────────────────────────────────────────────────────────────────────────────┐
+│ 9. IMPORTANT FILES                                                            │
+└───────────────────────────────────────────────────────────────────────────────┘
+
+   server.js           - Main server file
+   database.js         - Database operations
+   rule-engine.js      - Rule-based logic
+   resources.db        - Database file (auto-created)
+   public/index.html   - Main UI
+   public/app.js       - Frontend logic
+   USER_GUIDE.txt      - Complete user guide (this file's parent)
+   README.md           - Quick reference
+   walkthrough.md      - Detailed walkthrough
+
+┌───────────────────────────────────────────────────────────────────────────────┐
+│ 10. SAMPLE WORKFLOW                                                           │
+└───────────────────────────────────────────────────────────────────────────────┘
+
+   SCENARIO: New urgent project needs resources
+
+   1. CREATE PROJECT
+      • Go to Projects tab
+      • Click "+ Add Project"
+      • Name: "Mobile Banking App"
+      • Skills: "React Native, Security, API"
+      • Priority: High
+      • Save
+
+   2. AUTO-ALLOCATE
+      • Click "Auto Allocate" button
+      • System finds: Henry Martinez (75% match)
+      • Allocation created automatically
+
+   3. VERIFY
+      • Go to Allocations tab
+      • See: Henry → Mobile Banking App (100%)
+      • Go to Dashboard
+      • Bench count decreased
+      • Utilization updated
+
+   4. MONITOR
+      • Check Analytics for any conflicts
+      • Review recommendations
+      • Adjust if needed
+
+┌───────────────────────────────────────────────────────────────────────────────┐
+│ 11. QUICK COMMANDS                                                            │
+└───────────────────────────────────────────────────────────────────────────────┘
+
+   Install:           npm install
+   Start:             npm start
+   Stop:              Ctrl+C
+   Access:            http://localhost:3000
+   Backup DB:         Copy resources.db to safe location
+   Reset DB:          Delete resources.db and restart
+
+┌───────────────────────────────────────────────────────────────────────────────┐
+│ 12. GETTING HELP                                                              │
+└───────────────────────────────────────────────────────────────────────────────┘
+
+   1. Read USER_GUIDE.txt (comprehensive guide)
+   2. Check walkthrough.md (visual guide)
+   3. Review README.md (quick reference)
+   4. Check browser console for errors (F12)
+   5. Check server terminal for error messages
+
+┌───────────────────────────────────────────────────────────────────────────────┐
+│ 13. SYSTEM REQUIREMENTS                                                       │
+└───────────────────────────────────────────────────────────────────────────────┘
+
+   • Node.js v14 or higher
+   • Modern web browser (Chrome, Firefox, Edge, Safari)
+   • 100MB free disk space
+   • Internet connection (for initial npm install only)
+
+┌───────────────────────────────────────────────────────────────────────────────┐
+│ 14. TIPS FOR SUCCESS                                                          │
+└───────────────────────────────────────────────────────────────────────────────┘
+
+   💡 Use consistent skill naming (e.g., "JavaScript" not "JS")
+   💡 Update resource skills as they learn new technologies
+   💡 Set realistic project priorities
+   💡 Review bench resources weekly
+   💡 Act on critical alerts within 24 hours
+   💡 Keep average utilization between 70-85%
+   💡 Use analytics to make data-driven decisions
+   💡 Plan for resource availability in advance
+
+╔═══════════════════════════════════════════════════════════════════════════════╗
+║                           SUPPORT INFORMATION                                 ║
+╚═══════════════════════════════════════════════════════════════════════════════╝
+
+   Version:      1.0.0
+   Last Updated: January 30, 2026
+   Server URL:   http://localhost:3000
+   
+   Documentation Files:
+   • USER_GUIDE.txt     - Complete user manual (detailed)
+   • QUICK_START.txt    - This file (quick reference)
+   • README.md          - Project overview
+   • walkthrough.md     - Visual walkthrough
+
+   For detailed information on any feature, refer to USER_GUIDE.txt
+
+╔═══════════════════════════════════════════════════════════════════════════════╗
+║                              ENJOY THE SYSTEM!                                ║
+╚═══════════════════════════════════════════════════════════════════════════════╝
