@@ -13,6 +13,7 @@ npm-debug.log*
 # Environment variables
 .env
 .env.local
+.env.production
 
 # OS files
 .DS_Store
@@ -23,3 +24,8 @@ Thumbs.db
 .idea/
 *.swp
 *.swo
+
+# Uploads and AI Models
+uploads/
+models/
+
