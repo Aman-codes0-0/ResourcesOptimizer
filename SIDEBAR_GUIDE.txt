@@ -1,0 +1,69 @@
+# TeamOptimizer - Module Guide
+
+Here is an explanation of each module visible in the sidebar:
+
+## 1. Dashboard
+**Overview**: The central command center of the application.
+**Functionality**: Displays high-level metrics (Total Resources, Active Projects, Bench Strength), utilization charts, and real-time alerts. It gives you a quick snapshot of your organization's health.
+
+## 2. Resources
+**Overview**: The master database of all employees and contractors.
+**Functionality**:
+- View a list of all resources with their roles, skills, and status.
+- Add new resources or edit existing profiles.
+- Filter resources by skill or availability.
+
+## 3. Projects
+**Overview**: Management of all active and planned initiatives.
+**Functionality**:
+- Track project timelines, budgets, and priority.
+- View required skills for each project.
+- Monitor project status (Planning, Active, Completed).
+
+## 4. Allocations
+**Overview**: Managing the assignment of people to projects.
+**Functionality**:
+- Visual Gantt-chart style view of who is working on what.
+- Assign resources to projects for specific dates and utilization percentages.
+- Auto-optimize allocations to reduce bench time.
+
+## 5. Analytics
+**Overview**: Deep dive into data trends.
+**Functionality**:
+- **Utilization Trends**: See how busy your team is over time.
+- **Skill Demand**: Identify which skills are most requested vs. available.
+- **Bench Analysis**:  Track non-billable time to improve efficiency.
+
+## 6. AI Insights
+**Overview**: Intelligent recommendations powered by the system's engine.
+**Functionality**:
+- **Smart Staffing**: Get AI suggestions for the best person for a role.
+- **Churn Risk**: Identify employees at risk of leaving based on utilization patterns.
+- **Team Composition**: Suggestions for balancing teams with complementary skills.
+
+## 7. Requests (Management)
+**Overview**: Workflow for resource requisitions.
+**Functionality**:
+- Managers can submit requests for new resources.
+- Admins can review, approve, or reject these requests.
+- Tracks the history of all staffing requests.
+
+## 8. Cost Analysis
+**Overview**: Financial tracking for projects.
+**Functionality**:
+- **Budget vs. Actuals**: Compare planned budget against real resource costs.
+- **Overrun Alerts**: Highlights projects that are exceeding their financial limits.
+- **Cost Breakdown**: detailed view of costs by project or department.
+
+## 9. Reports
+**Overview**: Document generation and data export.
+**Functionality**:
+- **PDF Reports**: Generate executive summaries (e.g., Monthly Utilization Report).
+- **Data Export**: Download raw data in Excel or CSV format for external analysis.
+
+## 10. Settings (System)
+**Overview**: Configuration of the application.
+**Functionality**:
+- **Profile**: Update your user details.
+- **Users & Roles**: Manage system access (Admin/Manager/Viewer).
+- **Integrations**: Connect with JIRA, Slack, or Google Calendar.
